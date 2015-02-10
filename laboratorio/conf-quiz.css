@@ -1,0 +1,94 @@
+.latex {
+	vertical-align: middle;
+}
+/*----------quiz----------*/
+
+.hid {
+	display: none;
+}
+
+.article {
+	text-align: justify;
+	display: none;
+}
+
+.button-quiz{
+	color: #fff !important;
+	border: 1px solid #595959;
+	border-radius:3px;
+	background-color:#5d9cbd;
+	font-weight: bold;
+}
+.button-quiz:hover{
+	background-color: #3e7998;
+}
+
+/*----------slider----------*/
+.toogle_title {
+	width:502px;
+	font-size:12px;
+	padding:5px 0 0 10px;
+	cursor:pointer;
+	height:25px;
+	background: url(jsn_boot_pro/images/module-styles/blue-pattern.png);
+	color: #FFFFFF;
+	
+	font-weight:bold;
+}
+.toogle_panel {
+	width:500px;
+	padding:5px;
+	border: 1px solid #EFEFEF;
+	display:none;
+}
+
+.toogle_panel iframe{
+	border:0;
+}
+
+/*----------list-quiz----------*/
+.list-quiz {
+	position:relative;
+	left: 0;
+	top: 8px;
+	border-radius:3px;
+	margin-left: 0;
+	padding: 6px;
+	margin: 4px;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	color: #fff;
+	background-color: #5D9CBD;
+}
+.theorem {
+	padding:5px;
+	padding-top:15px;
+	border: 1px solid #EFEFEF;
+	border-radius:3px;
+}
+
+
+@media screen and (max-width: 540px) {
+/*----------slider----------*/
+.toogle_title {
+	width:98%;
+	font-size:12px;
+	padding:5px 0 0 10px;
+	cursor:pointer;
+	height:25px;
+	background: url(jsn_boot_pro/images/module-styles/blue-pattern.png);
+	color: #FFFFFF;
+	border: 1px solid #FEFEFE;
+	font-weight:bold;
+}
+.toogle_panel {
+	overflow: hidden;
+	width:98%;
+	height:360px;
+	padding:5px;
+	border: 1px solid #EFEFEF;
+	display:none;
+}
+
+}

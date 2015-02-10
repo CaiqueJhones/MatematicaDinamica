@@ -1,0 +1,33 @@
+.theorem input[type=radio] {
+    display:none; 
+}
+.theorem label{
+	margin-bottom:5px;
+	display:block;
+	padding:10px;
+	border:1px solid #cccccc;
+	border-radius: 5px;
+	-moz-box-shadow: 0px 2px 1px #e8e8e8;
+	-webkit-box-shadow: 0px 2px 1px #e8e8e8;
+	box-shadow: 0px 2px 1px #e8e8e8;
+	background: #FFF;
+	text-align: left;
+	cursor: pointer;
+}
+.theorem input[type=radio]:checked  + label{
+  border: 2px solid #21b4d0;
+}
+.acerto-box {
+	border-radius: 5px;
+	padding: 10px;
+	border:1px solid #009900;
+	background-color: #66C266;
+	color:#fff;
+}
+.erro-box {
+	border-radius: 5px;
+	padding: 10px;
+	border:1px solid #990000;
+	background-color: #FF6666;
+	color:#fff;
+}
