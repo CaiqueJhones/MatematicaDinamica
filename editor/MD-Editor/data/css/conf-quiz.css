@@ -1,0 +1,149 @@
+/* Imports */
+
+@import url(animate.css);
+
+.latex {
+	vertical-align: middle;
+}
+/*----------quiz----------*/
+
+.hid {
+	display: none;
+	-webkit-animation-name: bounceInDown;
+	-webkit-animation-fill-mode: both;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-timing-function: linear;
+	-moz-animation-name: bounceInDown;
+	-moz-animation-fill-mode: both;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: 1;
+	-moz-animation-timing-function: linear;
+	animation-name: bounceInDown;
+	animation-fill-mode: both;
+	animation-duration: 1s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+}
+
+.article {
+	text-align: justify;
+	display: none;
+}
+
+.button-quiz{
+	color: #fff !important;
+	border: 1px solid #595959;
+	border-radius:3px;
+	background-color:#5d9cbd;
+	font-weight: bold;
+	height: 30px;
+}
+.button-quiz:hover{
+	background-color: #3e7998;
+}
+
+/*----------slider----------*/
+.toogle_title {
+	width:502px;
+	font-size:12px;
+	padding:5px 0 0 10px;
+	cursor:pointer;
+	height:25px;
+	background: url(jsn_boot_pro/images/module-styles/blue-pattern.png);
+	color: #FFFFFF;
+	
+	font-weight:bold;
+}
+.toogle_panel {
+	width:500px;
+	padding:5px;
+	border: 1px solid #EFEFEF;
+	display:none;
+}
+
+.toogle_panel iframe{
+	border:0;
+}
+
+/*----------list-quiz----------*/
+.list-quiz {
+	position:relative;
+	left: 0;
+	top: 22px;
+	border-radius:3px;
+	margin-left: 0;
+	padding: 6px;
+	margin: 4px;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	color: #fff;
+	background-color: #5D9CBD;
+}
+.theorem {
+	padding:5px;
+	padding-top:15px;
+	border: 1px solid #EFEFEF;
+	border-radius:3px;
+}
+
+.lab input[type=radio] {
+    display:none; 
+}
+.lab label{
+	margin-bottom:5px;
+	display:block;
+	padding:10px;
+	border:1px solid #cccccc;
+	border-radius: 5px;
+	-moz-box-shadow: 0px 2px 1px #e8e8e8;
+	-webkit-box-shadow: 0px 2px 1px #e8e8e8;
+	box-shadow: 0px 2px 1px #e8e8e8;
+	background: #FFF;
+	text-align: left;
+	cursor: pointer;
+}
+
+.lab input[type=radio]:checked  + label{
+  border: 2px solid #21b4d0;
+}
+.acerto-box {
+	border-radius: 5px;
+	padding: 10px;
+	border:1px solid #009900;
+	background-color: #66C266;
+	color:#fff;
+}
+.erro-box {
+	border-radius: 5px;
+	padding: 10px;
+	border:1px solid #990000;
+	background-color: #FF6666;
+	color:#fff;
+}
+
+
+@media screen and (max-width: 540px) {
+/*----------slider----------*/
+.toogle_title {
+	width:98%;
+	font-size:12px;
+	padding:5px 0 0 10px;
+	cursor:pointer;
+	height:25px;
+	background: url(jsn_boot_pro/images/module-styles/blue-pattern.png);
+	color: #FFFFFF;
+	border: 1px solid #FEFEFE;
+	font-weight:bold;
+}
+.toogle_panel {
+	overflow: hidden;
+	width:98%;
+	height:360px;
+	padding:5px;
+	border: 1px solid #EFEFEF;
+	display:none;
+}
+
+}

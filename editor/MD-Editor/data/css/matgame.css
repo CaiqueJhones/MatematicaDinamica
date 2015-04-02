@@ -1,0 +1,102 @@
+/*
+	CSS Geral - MatGame-HtmlEditor 
+	version: 1.0
+*/
+
+/* ================= General tags ================= */
+body {
+	font: 14px/1.7 Helvetica, Arial, Tahoma, sans-serif;
+	color:#000;
+	-webkit-font-smoothing: antialiased;
+	background: #F0F0F0;
+	margin: 0 auto;
+	padding: 22px 0;
+	width: 940px;
+}
+.content {
+	padding: 10px;
+	text-align: justify;
+	background: #FFF;
+	border: 1px solid #FDFDFD;
+	border-radius:10px;
+}
+.math-line { 
+	vertical-align: text-bottom; 
+}
+.padding20 {
+	padding-top:20px;
+	font-size:0;
+	line-height:0;
+}
+.mg-article {
+	padding: 10px;
+}
+/* =============== DEFAULT HTML - TEXT STYLES =============== */
+sup {
+	bottom: 0.3em;
+	font-size: .8em;
+	position: relative;
+	vertical-align: baseline;
+}
+sup em {
+	color: red;
+}
+pre {
+	padding: 1em;
+	background: #FFFFD5;
+	border: none;
+	border-left: 5px solid #555;
+	font-family: "Courier New",Courier,monospace;
+}
+blockquote {
+	color: #404040;
+	border: none;
+	min-height: 45px;
+	font-style: italic;
+	padding: 2px 0 5px 60px;
+}
+blockquote p {
+	font-size: 1em;
+	line-height: inherit;
+}
+img {
+	max-width: 100%;
+}
+/* =============== DEFAULT HTML - HEADING STYLES =============== */
+h1 {
+	font-size: 1.6em;
+}
+h2 {
+	color: #0000cc;
+	font-size: 1.4em;
+	line-height: inherit;
+}
+h3 {
+	color: #cc0000;
+	font-size: 1.2em;
+}
+h4 {
+	color: #D59500;
+	font-size: 1.2em;
+}
+h5, h6 {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+h5 {
+	color: #5A8406;
+}
+h6 {
+	color: #663300;
+}
+/* =============== DEFAULT HTML - LINK STYLES =============== */
+a {
+	outline: none;
+	text-decoration: none;
+}
+a:hover, a:active {
+	text-decoration: none;
+}
+a img {
+	border: none;
+}
