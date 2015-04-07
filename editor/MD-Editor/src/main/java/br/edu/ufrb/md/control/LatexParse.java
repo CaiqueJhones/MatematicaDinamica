@@ -30,6 +30,7 @@ public final class LatexParse {
 	
 	private static int labelCount;
 	private static HashMap<String, Integer> label;
+	private static int acertoAtual, erroAtual, emptyAtual;
 	
 	private static int quizAtual, altAtual;
 
@@ -37,6 +38,7 @@ public final class LatexParse {
 		if(input == null || input.isEmpty())
 			return "";
 		quizAtual = altAtual = labelCount = 0;
+		acertoAtual = erroAtual = emptyAtual = 0;
 		theoremCount = new HashMap<>();
 		theoremName = new HashMap<>();
 		theoremPointer = new HashMap<>();
@@ -147,20 +149,22 @@ public final class LatexParse {
 		return toHTML;//replace("\n", "").replace("\r", "");
 	}
 	
-	//TODO REFAZERRRRRR
 	private static void replaceMyCommands(String text, String key1, String key2, String key3) {
 		if(key1.equals("mensagem")){
 			if(key2.equals("acerto")){
-				toHTML = toHTML.replace(text, 
-						"<p id='acerto_form"+quizAtual+"' style='display:none;' class='acerto-box'>"
+				acertoAtual++;
+				toHTML = toHTML.replaceFirst("\\\\mensagem\\{acerto\\}\\{([\\w\\W\\s][^\\}]*)\\}", 
+						"<p id='acerto_form"+acertoAtual+"' style='display:none;' class='acerto-box'>"
 						+key3+"</p>");
 			}else if(key2.equals("empty")){
-				toHTML = toHTML.replace(text, 
-						"<p id='empty_form"+quizAtual+"' style='display:none;' class='erro-box'>"
+				emptyAtual++;
+				toHTML = toHTML.replaceFirst("\\\\mensagem\\{empty\\}\\{([\\w\\W\\s][^\\}]*)\\}", 
+						"<p id='empty_form"+emptyAtual+"' style='display:none;' class='erro-box'>"
 						+key3+"</p>");
 			}else if(key2.equals("erro")){
-				toHTML = toHTML.replace(text, 
-						"<p id='erro_form"+quizAtual+"' style='display:none;' class='erro-box'>"
+				erroAtual++;
+				toHTML = toHTML.replaceFirst("\\\\mensagem\\{erro\\}\\{([\\w\\W\\s][^\\}]*)\\}", 
+						"<p id='erro_form"+erroAtual+"' style='display:none;' class='erro-box'>"
 						+key3+"</p>");
 			}else if(key2.equals("info")){
 				toHTML = toHTML.replace(text,"<p class='text-info'>"+key3+"</p>");
@@ -410,7 +414,7 @@ public final class LatexParse {
 		
 		else if (key1.equals("alternativa")) {
 			altAtual++;
-			toHTML = toHTML.replace(txt, 
+			toHTML = toHTML.replaceFirst("\\\\alternativa\\{"+key2+"\\}", 
 					"<input TYPE='RADIO' ID='alt"+altAtual+"' NAME=\"alternativa\" VALUE='"+
 							key2+"'><label for='alt"+altAtual+"'>");
 		}

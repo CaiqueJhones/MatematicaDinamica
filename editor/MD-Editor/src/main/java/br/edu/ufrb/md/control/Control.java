@@ -6,13 +6,11 @@ import static br.edu.ufrb.md.util.ToolsHelp.openWithDesktop;
 
 import java.awt.Event;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
-import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.event.CaretEvent;
@@ -256,34 +254,4 @@ public interface Control {
 		
 	}
 	
-	public class MyCloseActionHandler implements ActionListener {
-
-	    private String tabName;
-	    private JTabbedPane tabPane;
-
-	    public MyCloseActionHandler(String tabName, JTabbedPane tabPane) {
-	        this.tabName = tabName;
-	        this.tabPane = tabPane;
-	    }
-
-	    public String getTabName() {
-	        return tabName;
-	    }
-
-	    public void actionPerformed(ActionEvent evt) {
-
-	        int index = tabPane.indexOfTab(getTabName());
-	        if (index >= 0) {
-
-	            tabPane.removeTabAt(index);
-	            // It would probably be worthwhile getting the source
-	            // casting it back to a JButton and removing
-	            // the action handler reference ;)
-
-	        }
-
-	    }
-
-	}   
-
 }

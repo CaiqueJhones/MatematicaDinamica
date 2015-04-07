@@ -1,9 +1,10 @@
 package br.edu.ufrb.md.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
@@ -38,7 +39,10 @@ import org.fife.ui.rtextarea.SearchResult;
 
 import br.edu.ufrb.md.control.Console;
 import br.edu.ufrb.md.control.Control;
+import br.edu.ufrb.md.model.Project;
+import br.edu.ufrb.md.util.R;
 import br.edu.ufrb.md.util.ToolsHelp;
+import cj.utilities.ObjectManager;
 
 @SuppressWarnings("serial")
 public class RootFrame extends JFrame implements Control, SyntaxConstants, SearchListener{
@@ -52,13 +56,19 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 	private ReplaceDialog replaceDialog;
 	private StatusBar statusBar;
 	
+	private Project project;
+	
 	public RootFrame() {
-		//setRootPane(new RootPane());
+		load();
 		setIconImage(ToolsHelp.getIcon("favicon.png").getImage());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("MD Editor");
 		setSize(800, 600);
 		setLocationRelativeTo(null);
+		setExtendedState(project.getStateWindow());
+		FrameListener frame = new FrameListener();
+		addWindowListener(frame);
+		addWindowStateListener(frame);
 		
 		initSearchDialogs();
 			
@@ -71,13 +81,9 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 		scrollPane.setIconRowHeaderEnabled(true);
 		scrollPane.getGutter().setBookmarkingEnabled(true);
 		
-		//tabbedPane.addTab("File.tex", scrollPane);
-		addTabPane("File.tex", scrollPane);
-		addTabPane("Teste.tex", new RTextScrollPane());
-		
+		tabbedPane.addTab("Editor", scrollPane);
 		
 		contentPane.add(tabbedPane);
-		
 		
 		JTabbedPane tabbedPaneConsole = new JTabbedPane(SwingConstants.TOP);
 		Console console = Console.getInstance();
@@ -97,6 +103,28 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 		setJMenuBar(createMenu());
 		
 		pack();
+	}
+	
+	private void load() {
+		if(R.FILE_PROJECT.exists()) {
+			try {
+				project = (Project) ObjectManager.openSerial(R.FILE_PROJECT);
+			} catch (ClassNotFoundException | IOException e) {
+				Console.err.println(e.getMessage());
+				e.printStackTrace();
+			}
+		}else {
+			project = new Project();
+		}
+	}
+	
+	public void saveProject() {
+		try {
+			ObjectManager.saveSerial(R.FILE_PROJECT, project);
+		} catch (IOException e) {
+			Console.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -248,29 +276,7 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 	public String getSelectedText() {
 		return textArea.getSelectedText();
 	}
-	
-	public void addTabPane(String title, RTextScrollPane tabBody) {
-		tabbedPane.addTab(title, tabBody);
-		int index = tabbedPane.indexOfTab(title);
-		JPanel pnlTab = new JPanel(new BorderLayout(0, 0));
-		pnlTab.setOpaque(false);
-		JLabel lblTitle = new JLabel(title);
-		lblTitle.setFont(tabbedPane.getFont());
-		JButton btnClose = new JButton("X");
-		btnClose.setForeground(Color.LIGHT_GRAY);
-		btnClose.setFont(new Font("Calibri", Font.BOLD, 14));
-		btnClose.setOpaque(false);
-		btnClose.setContentAreaFilled(false);
-		btnClose.setBorderPainted(false);
-        
-		pnlTab.add(lblTitle, BorderLayout.CENTER);
-		pnlTab.add(btnClose, BorderLayout.EAST);
-
-		tabbedPane.setTabComponentAt(index, pnlTab);
-
-		btnClose.addActionListener(new MyCloseActionHandler(title, tabbedPane));
-	}
-	
+		
 	private static class StatusBar extends JPanel {
 
 		private JLabel label;
@@ -286,6 +292,27 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 			this.label.setText(label);
 		}
 
+	}
+	
+	public Project getProject() {
+		return project;
+	}
+	
+	public void exit() {
+		
+	}
+
+	private class FrameListener extends WindowAdapter {
+		@Override
+		public void windowClosing(WindowEvent we) {
+			saveProject();
+			exit();
+		}
+
+		@Override
+		public void windowStateChanged(WindowEvent e) {
+			getProject().setStateWindow(e.getNewState());
+		}
 	}
 
 	public static void main(String[] args) {
