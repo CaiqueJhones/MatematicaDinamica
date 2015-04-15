@@ -166,6 +166,7 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 		JMenuBar bar = new JMenuBar();
 		
 		JMenu file = new JMenu("File");
+		file.add(new OpenMdDatabase("open_db_min.png"));
 		file.add(new JMenuItem(new ExitAction()));
 		
 		JMenu edit = new JMenu("Editar");
@@ -196,6 +197,8 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 	
 	private JToolBar toolBar() {
 		JToolBar bar = new JToolBar();
+		bar.add(new JButton(new OpenMdDatabase("open_db.png")));
+		bar.addSeparator();
 		bar.add(new JButton(new CompileAction(textArea, this)));
 		bar.add(new JButton(new TesteAction(true)));
 		return bar;

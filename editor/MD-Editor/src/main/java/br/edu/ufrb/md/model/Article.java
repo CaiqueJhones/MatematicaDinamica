@@ -1,6 +1,5 @@
 package br.edu.ufrb.md.model;
 
-import java.sql.Date;
 
 public class Article {
 	private long id;
@@ -8,7 +7,7 @@ public class Article {
 	private String latex;
 	private String html;
 	private String author;
-	private Date date;
+	
 	public Article() {
 	}
 	public long getId() {
@@ -41,12 +40,8 @@ public class Article {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public Date getDate() {
-		return date;
+	@Override
+	public String toString() {
+		return id+"-"+title;
 	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	
-	
 }

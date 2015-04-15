@@ -7,12 +7,17 @@ import static br.edu.ufrb.md.util.ToolsHelp.openWithDesktop;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
+import javax.swing.JDialog;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
@@ -20,8 +25,12 @@ import org.fife.rsta.ui.search.FindDialog;
 import org.fife.rsta.ui.search.ReplaceDialog;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
+import br.edu.ufrb.md.database.MdArticleDAO;
+import br.edu.ufrb.md.model.Article;
 import br.edu.ufrb.md.util.R;
 import br.edu.ufrb.md.view.AboutDialog;
+import br.edu.ufrb.md.view.ListArticles;
+import br.edu.ufrb.md.view.LoadArticlesDialog;
 import br.edu.ufrb.md.view.RootFrame;
 
 public interface Control {
@@ -250,6 +259,58 @@ public interface Control {
 				action.setEnabled(textArea.canUndo());
 			else
 				action.setEnabled(textArea.canRedo());
+		}
+		
+	}
+	
+	@SuppressWarnings("serial")
+	class OpenMdDatabase extends AbstractAction {
+		
+		public OpenMdDatabase(String icon) {
+			if(icon.contains("min"))
+				putValue(NAME, "Abrir artigo remoto");
+			putValue(SMALL_ICON, getIcon(icon));
+			putValue(SHORT_DESCRIPTION, "Abrir artigo do site.");
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new Task(new LoadArticlesDialog()).execute();
+		}
+		
+		class Task extends SwingWorker<List<Article>, Void> {
+			JDialog dialog;
+			
+			public Task(JDialog dialog) {
+				this.dialog = dialog;
+				dialog.setVisible(true);
+			}
+
+			@Override
+			protected List<Article> doInBackground() throws Exception {
+				try(MdArticleDAO dao = new MdArticleDAO();) {
+					List<Article> list = dao.readArticle();
+					return list;
+				} catch (IOException e1) {
+					Console.err.println(e1.getMessage());
+					e1.printStackTrace();
+				}
+				return null;
+			}
+
+			@Override
+			protected void done() {
+				dialog.dispose();
+				try {
+					ListArticles listArticles = new ListArticles(get());
+					if(listArticles.start())
+						Console.out.println(listArticles.getArticle().getTitle());
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+				}				
+			}
+			
+			
 		}
 		
 	}
