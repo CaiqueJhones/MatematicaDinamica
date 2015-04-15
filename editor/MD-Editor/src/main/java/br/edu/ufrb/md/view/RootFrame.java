@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.Action;
@@ -39,6 +41,8 @@ import org.fife.ui.rtextarea.SearchResult;
 
 import br.edu.ufrb.md.control.Console;
 import br.edu.ufrb.md.control.Control;
+import br.edu.ufrb.md.control.Execute;
+import br.edu.ufrb.md.model.Article;
 import br.edu.ufrb.md.model.Project;
 import br.edu.ufrb.md.util.R;
 import br.edu.ufrb.md.util.ToolsHelp;
@@ -57,12 +61,12 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 	private StatusBar statusBar;
 	
 	private Project project;
+	private Article article;
 	
 	public RootFrame() {
 		load();
 		setIconImage(ToolsHelp.getIcon("favicon.png").getImage());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("MD Editor");
 		setSize(800, 600);
 		setLocationRelativeTo(null);
 		setExtendedState(project.getStateWindow());
@@ -106,15 +110,28 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 	}
 	
 	private void load() {
+		Execute.setInstance(this);
 		if(R.FILE_PROJECT.exists()) {
 			try {
 				project = (Project) ObjectManager.openSerial(R.FILE_PROJECT);
+				article = project.getArticle();
+				File file = project.getFileOpened();
+				if(file != null && file.exists()){
+					setTitle("MD Editor - "+file.getAbsolutePath());
+				}else{
+					if(article != null)
+						setTitle("MD Editor - "+article.getTitle());
+					else
+						setTitle("MD Editor");
+					project.setFileOpened(null);
+				}
 			} catch (ClassNotFoundException | IOException e) {
 				Console.err.println(e.getMessage());
 				e.printStackTrace();
 			}
 		}else {
 			project = new Project();
+			setTitle("MD Editor");
 		}
 	}
 	
@@ -153,6 +170,15 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 		textArea.setTabsEmulated(true);
 		textArea.setTabSize(4);
 		ToolTipManager.sharedInstance().registerComponent(textArea);
+		
+		File file = project.getFileOpened();
+		if(file != null && file.exists()){
+			try {
+				textArea.read(new FileReader(file), null);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return textArea;
 	}
 	
@@ -166,7 +192,12 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 		JMenuBar bar = new JMenuBar();
 		
 		JMenu file = new JMenu("File");
-		file.add(new OpenMdDatabase("open_db_min.png"));
+		file.add(new JMenuItem(new NewArticle()));
+		file.add(new JMenuItem(new OpenMdDatabase("open_db_min.png")));
+		file.add(new JMenuItem(new SaveInDatabase(this, DB_LOCAL, "save_database_min.png")));
+		file.add(new JMenuItem(new SaveInDatabase(this, DB_REMOTE, "database_min.png")));
+		file.add(new JMenuItem(new SaveFile(textArea, "save_local_min.png")));
+		file.addSeparator();
 		file.add(new JMenuItem(new ExitAction()));
 		
 		JMenu edit = new JMenu("Editar");
@@ -198,6 +229,9 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 	private JToolBar toolBar() {
 		JToolBar bar = new JToolBar();
 		bar.add(new JButton(new OpenMdDatabase("open_db.png")));
+		bar.add(new JButton(new SaveInDatabase(this, DB_LOCAL, "save_database.png")));
+		bar.add(new JButton(new SaveInDatabase(this, DB_REMOTE, "database.png")));
+		bar.add(new JButton(new SaveFile(textArea, "save_local.png")));
 		bar.addSeparator();
 		bar.add(new JButton(new CompileAction(textArea, this)));
 		bar.add(new JButton(new TesteAction(true)));
@@ -301,6 +335,16 @@ public class RootFrame extends JFrame implements Control, SyntaxConstants, Searc
 		return project;
 	}
 	
+	public Article getArticle() {
+		return article;
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
+		project.setArticle(article);
+		saveProject();
+	}
+
 	public void exit() {
 		
 	}

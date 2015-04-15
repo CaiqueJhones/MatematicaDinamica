@@ -18,6 +18,7 @@ public class Project implements Serializable{
 	private int stateWindow;
 	private long articleID;
 	private File fileOpened;
+	private Article article;
 	
 	public Project() {
 		defaultFont = new Font("Consolas", Font.PLAIN, 14);
@@ -53,6 +54,14 @@ public class Project implements Serializable{
 
 	public void setFileOpened(File fileOpened) {
 		this.fileOpened = fileOpened;
+	}
+
+	public Article getArticle() {
+		return article;
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
 	}
 
 }

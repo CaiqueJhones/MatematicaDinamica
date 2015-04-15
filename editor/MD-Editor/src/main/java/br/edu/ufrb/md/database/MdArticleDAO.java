@@ -19,7 +19,11 @@ public class MdArticleDAO implements Closeable{
 	private Connection connection;
 	
 	public MdArticleDAO() {
-		connection = new ConnectionFactory().getConnection(ConnectionFactory.MYSQL);
+		try {
+			connection = new ConnectionFactory().getConnection(ConnectionFactory.MYSQL);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	public void update(Article article) {

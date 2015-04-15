@@ -7,14 +7,14 @@ import javax.swing.JDialog;
 @SuppressWarnings("serial")
 public class LoadArticlesDialog extends JDialog {
 	
-	public LoadArticlesDialog() {
+	public LoadArticlesDialog(String text) {
 		setTitle("Carregando");
 		setBounds(100, 100, 450, 150);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setAlwaysOnTop(true);
 		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(new PanelLoad("Lendo artigos"), BorderLayout.CENTER);
+		getContentPane().add(new PanelLoad(text), BorderLayout.CENTER);
 	}
 		
 }

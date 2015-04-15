@@ -67,6 +67,7 @@ public class ArticleDAO implements Closeable {
 			statement.setString(3, article.getLatex());
 			statement.setString(4, article.getHtml());
 			statement.setString(5, article.getAuthor());
+			statement.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
 
 			statement.execute();
 		} catch (SQLException e) {
@@ -121,6 +122,18 @@ public class ArticleDAO implements Closeable {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	public boolean contains(long id) {
+		String sql = "select id from article where id=?";
+		try(PreparedStatement statement = connection.prepareStatement(sql);) {
+			statement.setLong(1, id);
+			ResultSet query = statement.executeQuery();
+			return query.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	@Override

@@ -1,7 +1,11 @@
 package br.edu.ufrb.md.model;
 
+import java.io.Serializable;
 
-public class Article {
+
+public class Article implements Serializable{
+	
+	private static final long serialVersionUID = 6326711992262152258L;
 	private long id;
 	private String title;
 	private String latex;
@@ -9,6 +13,10 @@ public class Article {
 	private String author;
 	
 	public Article() {
+		title = "";
+		latex = "";
+		html = "";
+		author = "";
 	}
 	public long getId() {
 		return id;

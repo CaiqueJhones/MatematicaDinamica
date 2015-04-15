@@ -77,7 +77,6 @@ public class ListArticles extends JDialog{
 	@Override
 	public void setVisible(boolean b) {
 		super.setVisible(b);
-		accept = false;
 	}
 	
 	public boolean start() {
