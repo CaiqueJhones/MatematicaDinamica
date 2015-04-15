@@ -2,13 +2,15 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="scr/main/resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre8"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/AutoComplete"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/RSTALanguageSupport"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/RSTAUI"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/RSyntaxTextArea"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CJLibrary"/>
-	<classpathentry kind="lib" path="D:/Caique/Documentos/Projetos Java/libs e jars/JTattoo-1.6.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrador/Documents/Caique - Promover/PROMOVER/JTattoo-1.6.11.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Math"/>
+	<classpathentry kind="lib" path="C:/Users/Administrador/Documents/Caique - Promover/PROMOVER/mysql-connector-java-5.1.18-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrador/Documents/Caique - Promover/PROMOVER/sqlite-jdbc-3.6.20.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

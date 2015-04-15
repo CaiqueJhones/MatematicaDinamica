@@ -47,7 +47,7 @@ public final class LatexParse {
 
 		final long INIT = System.currentTimeMillis();
 
-		Console.out.println("Convertendo coment√°rios");
+		Console.out.println("Convertendo coment·rios");
 		// coment√°rio
 		toHTML = toHTML.replaceAll("\\\\%", "\u00A9");
 		matcher = Pattern.compile("%(.*)").matcher(toHTML);
@@ -117,7 +117,7 @@ public final class LatexParse {
 			replaceLine(matcher.group(0));
 		}
 
-		Console.out.println("Convertendo pr√©-ambulo");
+		Console.out.println("Convertendo prÈ-ambulo");
 		// preambulo
 		matcher = Pattern.compile("\\\\([a-z]+)[[\\w-,]*]*\\{[a-z]*\\}*")
 				.matcher(toHTML);
@@ -125,7 +125,7 @@ public final class LatexParse {
 			replacePreAmbule(matcher.group(0), matcher.group(1));
 		}
 
-		Console.out.println("Convertendo equa√ß√µes..");
+		Console.out.println("Convertendo equaÁıes..");
 		// Comandos do tipo $$equa√ß√£o$$
 		matcher = Pattern.compile("\\$+\\$([\\w\\s\\W][^\\$]+)\\$?\\$")
 				.matcher(toHTML);
@@ -168,10 +168,24 @@ public final class LatexParse {
 						+key3+"</p>");
 			}else if(key2.equals("info")){
 				toHTML = toHTML.replace(text,"<p class='text-info'>"+key3+"</p>");
+			}else if(key2.equals("warn")){
+				toHTML = toHTML.replace(text,"<p class='text-warn'>"+key3+"</p>");
+			}else if(key2.equals("error")){
+				toHTML = toHTML.replace(text,"<p class='text-error'>"+key3+"</p>");
 			}else {
 				toHTML = toHTML.replace(text,"<p>"+key3+"</p>");
 			}
 			
+		}else if(key1.equals("end")){
+			if(key2.equals("quiz")){
+				toHTML = toHTML.replace(text, "<p><input onclick=\"javascript:solution(this.form,'"
+						+ key3+"');\""
+						+ " type='BUTTON' value='RESULTADO' class='button-quiz'/></p></form></div></div></p>");
+			}
+		}else if(key1.equals("begin")){
+			if(key2.equals("esconder")){
+				toHTML = toHTML.replace(text, "<div id='"+key3+"' class='hid'>");
+			}
 		}
 	}
 
@@ -214,6 +228,10 @@ public final class LatexParse {
 
 			else if (key2.equals("equation")) {
 				toHTML = toHTML.replace(txt, "$$");
+			}
+			
+			else if (key2.equals("esconder")) {
+				toHTML = toHTML.replace(txt, "<div class='hid'>");
 			}
 
 			if (key2.equals("slider")) {
@@ -280,6 +298,10 @@ public final class LatexParse {
 
 			else if (key2.equals("equation")) {
 				toHTML = toHTML.replace(txt, "$$");
+			}
+			
+			else if (key2.equals("esconder")) {
+				toHTML = toHTML.replace(txt, "</div");
 			}
 
 			if (key2.equals("slider")) {
